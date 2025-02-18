@@ -14,18 +14,18 @@ public:
 	explicit String(int num);
 	String(char* str);
 
-	// Правило 3
-	~String(); // деструктор
-	String(const String& other);   // Конструктор копирования
-	String& operator=(const String& other);  // оператор присваивания копирования
+	// РџСЂР°РІРёР»Рѕ 3
+	~String(); // РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+	String(const String& other);   // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+	String& operator=(const String& other);  // РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 
 
-	// Правило 5
-	// Если в вашем коде возникает конструктор переносом или оператор присваивания переноса, то нужно реализовать их оба
-	// Конструктор переноса - данный конструтор физически не может вызвать исключений
-	// Элементы правила 5 называются  -  move семантикой
-	String(String&& other)noexcept;     // конструктор переноса
-	String& operator=(String&& other);  //  ссылка на скороживущий объект (двойная ссылка)   оператор присваивания
+	// РџСЂР°РІРёР»Рѕ 5
+	// Р•СЃР»Рё РІ РІР°С€РµРј РєРѕРґРµ РІРѕР·РЅРёРєР°РµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРЅРѕСЃРѕРј РёР»Рё РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РїРµСЂРµРЅРѕСЃР°, С‚Рѕ РЅСѓР¶РЅРѕ СЂРµР°Р»РёР·РѕРІР°С‚СЊ РёС… РѕР±Р°
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРЅРѕСЃР° - РґР°РЅРЅС‹Р№ РєРѕРЅСЃС‚СЂСѓС‚РѕСЂ С„РёР·РёС‡РµСЃРєРё РЅРµ РјРѕР¶РµС‚ РІС‹Р·РІР°С‚СЊ РёСЃРєР»СЋС‡РµРЅРёР№
+	// Р­Р»РµРјРµРЅС‚С‹ РїСЂР°РІРёР»Р° 5 РЅР°Р·С‹РІР°СЋС‚СЃСЏ  -  move СЃРµРјР°РЅС‚РёРєРѕР№
+	String(String&& other)noexcept;     // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРЅРѕСЃР°
+	String& operator=(String&& other);  //  СЃСЃС‹Р»РєР° РЅР° СЃРєРѕСЂРѕР¶РёРІСѓС‰РёР№ РѕР±СЉРµРєС‚ (РґРІРѕР№РЅР°СЏ СЃСЃС‹Р»РєР°)   РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 
 	void reverse(int new_capacity);
 	void shrink_to_fit();
@@ -42,16 +42,16 @@ public:
 	friend String& operator+ (char ch, const String& rsd);
 
 
-	//При перегрузке опараторов нельзя менять поведение оператора, если оно действует также как встроенный оператор
-	char& operator[](int)noexcept;   // обязательство не вызывать исключение в блоке кода
+	//РџСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РѕРїР°СЂР°С‚РѕСЂРѕРІ РЅРµР»СЊР·СЏ РјРµРЅСЏС‚СЊ РїРѕРІРµРґРµРЅРёРµ РѕРїРµСЂР°С‚РѕСЂР°, РµСЃР»Рё РѕРЅРѕ РґРµР№СЃС‚РІСѓРµС‚ С‚Р°РєР¶Рµ РєР°Рє РІСЃС‚СЂРѕРµРЅРЅС‹Р№ РѕРїРµСЂР°С‚РѕСЂ
+	char& operator[](int)noexcept;   // РѕР±СЏР·Р°С‚РµР»СЊСЃС‚РІРѕ РЅРµ РІС‹Р·С‹РІР°С‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ РІ Р±Р»РѕРєРµ РєРѕРґР°
 	const char& operator[](int i)const noexcept;
 
 	char& at(int i);
 	const char& at(int i)const;
 
 
-	friend bool operator<<(std::ostream& out, const String& rsd);
-	friend bool operator>>(std::istream& out, const String& rsd);
+	//friend bool operator<<(std::ostream& out, const String& rsd);
+	//friend bool operator>>(std::istream& out, const String& rsd);
 
 
 	friend bool operator<(const String& lsd, const String& rsd);
@@ -88,7 +88,10 @@ public:
 	void emplace_back(char ch);
 
 
+	// РћРїРµСЂР°С‚РѕСЂС‹ РІРІРѕРґР° Рё РІС‹РІРѕРґР°
+	// РІС‹РІРѕРґ
 	friend std::ostream& operator<<(std::ostream& out, const String& obj);
+	// РІРІРѕРґ
 	friend std::istream& operator>>(std::istream& in, const String& obj);
 
 private:
