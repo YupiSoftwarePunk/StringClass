@@ -3,7 +3,7 @@
 
 // constructors
 
-// Обычные конструкторы
+// РћР±С‹С‡РЅС‹Рµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 String::String() :String(0) {}
 
 String::String(int num): capacity_(num)
@@ -19,7 +19,7 @@ String::String(char* str): str_(str)
 	memcpy(str_, str, capacity_);
 }
 
-// Конструктор копирования
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 String::String(const String& other)
 {
 	capacity_ = other.capacity_;
@@ -29,18 +29,20 @@ String::String(const String& other)
 	}
 }
 
-// оператор присваивания копирования
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 String& String::operator=(const String& other)
 {
+	allocator_.deallocate(str_);
+	capacity_ = other.capacity_;
+	str_ = allocator_.allocate(capacity_);
 	for (int i = 0; i < capacity_; i++)
 	{
 		std::swap(str_[i], other.str_[i]);
 	}
-	//std::swap(capacity_, other.capacity_);
-	return 0;
+	return *this;
 }
 
-// конструктор переноса
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРµСЂРµРЅРѕСЃР°
 String::String(String&& other) noexcept
 {
 	str_ = nullptr;
@@ -49,6 +51,16 @@ String::String(String&& other) noexcept
 	std::swap(str_, other.str_);
 	std::swap(capacity_, other.capacity_);
 
+}
+
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+String& String::operator=(String&& other)
+{
+	allocator_.deallocate(str_);
+	capacity_ = other.size();
+	str_ = other.str_;
+	other.str_ = nullptr;
+	return *this;
 }
 
 
@@ -60,4 +72,23 @@ String::~String()
 	{
 		allocator_.deallocate(str_);
 	}
+}
+
+
+// РћРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР°
+std::ostream& operator<<(std::ostream& out, const String& obj)
+{
+	if (obj.str_ == nullptr)
+	{
+		return out;
+	}
+	out << obj.str_;
+	return out;
+}
+
+// РћРїРµСЂР°С‚РѕСЂ РІРІРѕРґР°
+std::istream& operator>>(std::istream& in, const String& obj)
+{
+	in >> obj;
+	return in;
 }
